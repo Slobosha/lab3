@@ -1,1 +1,27 @@
+def gen_bin_tree(height=None, root=None):
+    """
+    Рекурсивно строит бинарное дерево заданной высоты с указанным корнем.
 
+    Параметры:
+    height: int - высота дерева
+    root: int - корень дерева
+
+    Возвращает:
+    dict
+        Словарь, представляющий бинарное дерево. Структура:
+        {'value': root_value, 'left': ..., 'right': ...}
+    """
+    if root is None:
+        root = 15
+    if height is None:
+        height = 6
+
+    if height < 1:
+        return None
+    
+    left_leaf = 2 * (root + 1)
+    right_leaf = 2 * (root - 1)
+    if height == 1:
+        return {'value': root, 'left': None, 'right': None}
+    else:
+        return {'value': root, 'left': gen_bin_tree(height-1, left_leaf), 'right': gen_bin_tree(height-1, right_leaf)}
