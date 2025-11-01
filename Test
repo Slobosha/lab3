@@ -1,1 +1,41 @@
+def gen_bin_tree(height=None, root=None):
+    """
+    Рекурсивно генерирует бинарное дерево.
 
+    Каждый узел представлен словарем: {str(root): [left_leaf,right_leaf]}
+
+    Args:
+        height (int): Высота дерева.
+        root (int): Значение корневого узла.
+
+    Возвращает:
+        dict: Словарь, представляющий дерево.
+    """
+    if height==None:
+        height=6
+    if root==None:
+        root=15
+    
+    if height < 0:
+        return {}
+    if height == 0:
+        return {str(root): []}
+    
+    left_value = 2 * (root + 1)
+    right_value = 2 * (root - 1)
+    left_leaf = gen_bin_tree(height - 1, left_value)
+    right_leaf = gen_bin_tree(height - 1, right_value)
+
+    return {str(root): [left_leaf, right_leaf]}
+# Тесты
+import unittest
+class TestMath(unittest.TestCase):
+    def test_tree1(self):
+        self.assertEqual((gen_bin_tree()),15)
+
+    def test_tree2(self):
+        self.assertEqual((gen_bin_tree(1,2)),({'2': [{'6': []}, {'2': []}]}))
+
+    def test_tree3(self):
+        self.assertEqual((gen_bin_tree(2,2)),({'2': [{'6': [{'14': []}, {'10': []}]}, {'2': [{'6': []}, {'2': []}]}]}))
+unittest.main(argv=[''], verbosity=2, exit=False)
